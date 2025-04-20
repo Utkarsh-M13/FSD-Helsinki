@@ -1,0 +1,40 @@
+@import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
+.search {
+  margin: 20px;
+  padding: 15px;
+  border: 2px whitesmoke solid;
+  width: 400px;
+  height: 20px;
+  outline: none;
+  font-size: large;
+  border-radius: 20px;
+  background-color: rgb(29, 27, 27);
+  color: whitesmoke;
+}
+
+.show {
+  background-color: rgb(29, 27, 27);
+  color: whitesmoke;
+  font-family: Inter;
+  border: whitesmoke solid 2px;
+  padding: 5px;
+  border-radius: 10px;
+  margin: 10px 0px;
+}
+.info {
+  margin: 10px 0;
+}
+
+.data {
+  margin: 20px;
+}
+
+.flag {
+  height: 250px;
+}
+
+body {
+  background-color: rgb(29, 27, 27);
+  color: whitesmoke;
+  font-family: Inter;
+}
