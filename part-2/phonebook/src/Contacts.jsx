@@ -1,11 +1,18 @@
-import React from 'react'
+import React from "react";
 
-const Contacts = ({contacts}) => {
+const Contacts = ({ contacts, handleDelete }) => {
   return (
     <ul>
-      {contacts.map((person) => <li key={person.name}>{person.name}: {person.number}</li>)}
+      {contacts.map((person) => (
+        <div key={person.id}>
+          <li>
+            {person.name}: {person.number}
+          </li>
+          <button onClick={() => handleDelete(person.id)}>Delete</button>
+        </div>
+      ))}
     </ul>
-  )
-}
+  );
+};
 
-export default Contacts
+export default Contacts;
