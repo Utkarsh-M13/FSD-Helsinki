@@ -1,0 +1,30 @@
+GET http://localhost:3001/api/persons
+
+###
+GET http://localhost:3001/api/info
+
+###
+GET http://localhost:3001/api/persons/1
+
+###
+GET http://localhost:3001/api/persons/8
+
+###
+DELETE http://localhost:3001/api/persons/1
+
+###
+POST  http://localhost:3001/api/persons/ HTTP/1.1
+content-type: application/json
+
+{
+  "name": "Utkarsh M",
+  "number": "9892221144"
+}
+
+###
+POST  http://localhost:3001/api/persons/ HTTP/1.1
+content-type: application/json
+
+{
+  "number": "Utkarsh Majithia"
+}
