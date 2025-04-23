@@ -1,0 +1,90 @@
+@import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
+
+body {
+  font-family: inter;
+  background-color: rgb(53, 44, 44);
+  color: whitesmoke;
+  padding: 10px 25px;
+}
+
+button {
+  padding: 4px;
+  font-size: x-small;
+  border-radius: 10px;
+  color: white;
+  border: solid white 2px;
+  background-color: rgb(53, 44, 44);
+  margin: 10px 5px;
+  transition: 0.3s;
+}
+
+.add {
+  width: 100px;
+  font-size: large;
+}
+
+button:hover {
+  background-color: white;
+  color: rgb(53, 44, 44);
+}
+
+button:active {
+  filter: brightness(0.8);
+}
+
+
+.error {
+  background-color: rgb(190, 7, 7);
+  padding: 20px;
+  border: 2px solid white;
+  border-radius: 20px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.addMessage {
+  background-color: rgb(39, 142, 58);
+  padding: 20px;
+  border: 2px solid white;
+  border-radius: 20px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.label {
+  margin: 5px 0px;
+}
+
+input {
+  outline: none;
+  border: none;
+  background-color: rgb(53, 44, 44);
+  border-bottom: 2px solid white;
+  margin: 5px 0px;
+  color: white;
+}
+
+.x {
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+}
+
+.x:hover {
+  background-color: rgb(53, 44, 44);;
+  filter: brightness(0.8);
+}
+
+.person {
+  display: flex;
+
+  align-items: center;
+}
