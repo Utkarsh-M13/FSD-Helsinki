@@ -38,56 +38,103 @@ const createContact = (name, number) => {
   return { name, number, id };
 };
 
-app.get("/api/persons", (req, res) => {
-  Person.find({}).then((people) => {
-    res.json(people);
-  });
+// Handle known paths
+
+app.get("/api/persons", (req, res, next) => {
+  Person.find({})
+    .then((people) => {
+      res.json(people);
+    })
+    .catch((error) => next(error));
 });
 
-app.get("/api/info", (req, res) => {
-  const numData = `Phonebook has data for ${contacts.length} people`;
-  const date = Date();
-  res.send(`<div>${numData}</div><div>${date}</div>`);
+app.get("/api/info", (req, res, next) => {
+  Person.countDocuments({})
+    .then((length) => {
+      const numData = `Phonebook has data for ${length} people`;
+      const date = Date();
+      res.send(`<div>${numData}</div><div>${date}</div>`);
+    })
+    .catch((error) => next(error));
 });
 
-app.get("/api/persons/:id", (req, res) => {
+app.get("/api/persons/:id", (req, res, next) => {
+  const params = req.params;
+  Person.findById(params.id)
+    .then((person) => {
+      if (person) {
+        res.json(person);
+      } else {
+        res.status(404).end();
+      }
+    })
+    .catch((error) => next(error));
+});
+
+app.delete("/api/persons/:id", (req, res, next) => {
   const params = req.params;
 
-  Person.findById(params.findById).then((person) => {
-    res.json(person);
-  });
+  Person.findByIdAndDelete(req.params.id)
+    .then((result) => {
+      res.status(204).end();
+    })
+    .catch((error) => next(error));
 });
 
-app.delete("/api/persons/:id", (req, res) => {
-  const params = req.params;
-  contacts = contacts.filter((p) => p.id !== params.id);
-
-  res.status(204).end();
-});
-
-app.post("/api/persons", (req, res) => {
+app.post("/api/persons", (req, res, next) => {
   const name = req.body.name;
   const number = req.body.number;
 
-  try {
-    if (!!!name) throw Error("Name must be defined");
-    if (!!!number) throw Error("Number must be defined");
-    const person = new Person({
-      name,
-      number,
-    });
-    person.save().then((savedPerson) => {
+  if (!!!name) throw Error("Name must be defined");
+  if (!!!number) throw Error("Number must be defined");
+  const person = new Person({
+    name,
+    number,
+  });
+  person
+    .save()
+    .then((savedPerson) => {
       res.json(savedPerson);
-    });
-  } catch (e) {
-    res
-      .status(400)
-      .json({
-        error: e.message,
-      })
-      .end();
-  }
+    })
+    .catch((error) => next(error));
 });
+
+app.put("/api/persons/:id", (req, res, next) => {
+  const params = req.params;
+  Person.findById(params.id).then((person) => {
+    if (!person) {
+      return res.status(404).end();
+    }
+
+    person.name = req.body.name;
+    person.number = req.body.number;
+
+    return person
+      .save()
+      .then((savedPerson) => {
+        res.json(savedPerson);
+      })
+      .catch((error) => next(error));
+  });
+});
+
+// Handle unknown paths
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: "unknown endpoint" });
+};
+app.use(unknownEndpoint);
+
+// Handle errors
+const errorHandler = (error, req, res, next) => {
+  console.log("Error:", error);
+
+  if (error.name === "CastError") {
+    return res.status(400).send({ error: "malformatted id" });
+  }
+
+  next(error);
+};
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
