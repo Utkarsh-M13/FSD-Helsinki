@@ -1,5 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
+require("dotenv").config();
+const Person = require("./models/person");
 const app = express();
 
 app.use(express.json());
@@ -7,6 +9,7 @@ app.use(express.static("dist"));
 morgan.token("body", (req, res) => {
   return JSON.stringify(req.body);
 });
+
 app.use(
   morgan((tokens, req, res) => {
     return [
@@ -22,29 +25,6 @@ app.use(
   })
 );
 
-let contacts = [
-  {
-    id: "1",
-    name: "Arto Hellas",
-    number: "040-123456",
-  },
-  {
-    id: "2",
-    name: "Ada Lovelace",
-    number: "39-44-5323523",
-  },
-  {
-    id: "3",
-    name: "Dan Abramov",
-    number: "12-43-234345",
-  },
-  {
-    id: "4",
-    name: "Mary Poppendieck",
-    number: "39-23-6423122",
-  },
-];
-
 const createContact = (name, number) => {
   if (!!!name) throw Error("Name must be defined");
   if (!!!number) throw Error("Number must be defined");
@@ -59,7 +39,9 @@ const createContact = (name, number) => {
 };
 
 app.get("/api/persons", (req, res) => {
-  res.json(contacts);
+  Person.find({}).then((people) => {
+    res.json(people);
+  });
 });
 
 app.get("/api/info", (req, res) => {
@@ -70,13 +52,10 @@ app.get("/api/info", (req, res) => {
 
 app.get("/api/persons/:id", (req, res) => {
   const params = req.params;
-  const person = contacts.find((p) => p.id === params.id);
 
-  if (!person) {
-    res.status(404).end();
-    return;
-  }
-  res.json(person);
+  Person.findById(params.findById).then((person) => {
+    res.json(person);
+  });
 });
 
 app.delete("/api/persons/:id", (req, res) => {
@@ -87,13 +66,19 @@ app.delete("/api/persons/:id", (req, res) => {
 });
 
 app.post("/api/persons", (req, res) => {
-  const person = req.body;
+  const name = req.body.name;
+  const number = req.body.number;
+
   try {
-    const p = createContact(
-      person.name ?? undefined,
-      person.number ?? undefined
-    );
-    return res.json(p);
+    if (!!!name) throw Error("Name must be defined");
+    if (!!!number) throw Error("Number must be defined");
+    const person = new Person({
+      name,
+      number,
+    });
+    person.save().then((savedPerson) => {
+      res.json(savedPerson);
+    });
   } catch (e) {
     res
       .status(400)
