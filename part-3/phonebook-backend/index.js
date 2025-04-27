@@ -25,19 +25,6 @@ app.use(
   })
 );
 
-const createContact = (name, number) => {
-  if (!!!name) throw Error("Name must be defined");
-  if (!!!number) throw Error("Number must be defined");
-  if (contacts.find((p) => p.name === name)) throw Error("Name must be unique");
-
-  let id = Math.round(Math.random() * 1000000).toString();
-  while (contacts.find((p) => p.id === id)) {
-    id = Math.random() * 1000000;
-  }
-  contacts.push({ name, number, id });
-  return { name, number, id };
-};
-
 // Handle known paths
 
 app.get("/api/persons", (req, res, next) => {
@@ -85,8 +72,6 @@ app.post("/api/persons", (req, res, next) => {
   const name = req.body.name;
   const number = req.body.number;
 
-  if (!!!name) throw Error("Name must be defined");
-  if (!!!number) throw Error("Number must be defined");
   const person = new Person({
     name,
     number,
@@ -101,21 +86,22 @@ app.post("/api/persons", (req, res, next) => {
 
 app.put("/api/persons/:id", (req, res, next) => {
   const params = req.params;
-  Person.findById(params.id).then((person) => {
-    if (!person) {
-      return res.status(404).end();
+  Person.findByIdAndUpdate(
+    params.id,
+    {
+      name: req.body.name,
+      number: req.body.name,
+    },
+    {
+      new: true,
+      runValidators: true,
+      context: "query",
     }
-
-    person.name = req.body.name;
-    person.number = req.body.number;
-
-    return person
-      .save()
-      .then((savedPerson) => {
-        res.json(savedPerson);
-      })
-      .catch((error) => next(error));
-  });
+  )
+    .then((savedPerson) => {
+      res.json(savedPerson);
+    })
+    .catch((error) => next(error));
 });
 
 // Handle unknown paths
@@ -130,6 +116,8 @@ const errorHandler = (error, req, res, next) => {
 
   if (error.name === "CastError") {
     return res.status(400).send({ error: "malformatted id" });
+  } else if (error.name === "ValidationError") {
+    return res.status(400).send({ error: error.message });
   }
 
   next(error);

@@ -18,7 +18,7 @@ content-type: application/json
 
 {
   "name": "Utkarsh M",
-  "number": "9892221144"
+  "number": "989-2221144"
 }
 
 ###
@@ -30,10 +30,10 @@ content-type: application/json
 }
 
 ###
-PUT http://localhost:3001/api/persons/680c140b3bf0f670e54d5026 HTTP/1.1
+PUT http://localhost:3001/api/persons/68098bef6ba193428a1ee213 HTTP/1.1
 content-type: application/json
 
 {
-  "name": "John Pork",
+  "name": "Johnpork",
   "number": "38130"
 }
