@@ -7,9 +7,9 @@ content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlVUSyIsImlkIjoiNjgxMTQ5YjQyZmJmMjQ4ZjZlMjdkODRmIiwiaWF0IjoxNzQ1OTY1OTgzfQ.FzugtFhmZV7jo10hk1GZllBiOwzi38B1QKR2IO5yrWE
 
 {
-  "title": "First Blog",
-  "author": "Utkarsh Tester",
-  "url": "fajjall.com",
+  "title": "Seconf Blog",
+  "author": "Utkarsh Best",
+  "url": "fhaofaohl.com",
   "likes": 0
 }
 
@@ -36,3 +36,8 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3003/api/users
+
+####
+DELETE  http://localhost:3003/api/blogs/681156f4c5b7ca0c6a250be5 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlVUSyIsImlkIjoiNjgxMTQ5YjQyZmJmMjQ4ZjZlMjdkODRmIiwiaWF0IjoxNzQ1OTY1OTgzfQ.FzugtFhmZV7jo10hk1GZllBiOwzi38B1QKR2IO5yrWE
