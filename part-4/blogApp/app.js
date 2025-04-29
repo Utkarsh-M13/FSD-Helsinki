@@ -10,6 +10,7 @@ const app = express()
 app.use(express.json())
 
 mongoose.connect(config.MONGO_URI)
+app.use(middleware.tokenExtractor)
 
 app.use('/api/blogs', blogRouter)
 app.use('/api/users', userRouter)

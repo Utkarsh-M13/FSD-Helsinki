@@ -4,6 +4,7 @@ GET http://localhost:3003/api/blogs
 ####
 POST http://localhost:3003/api/blogs HTTP/1.1
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlVUSyIsImlkIjoiNjgxMTQ5YjQyZmJmMjQ4ZjZlMjdkODRmIiwiaWF0IjoxNzQ1OTY1OTgzfQ.FzugtFhmZV7jo10hk1GZllBiOwzi38B1QKR2IO5yrWE
 
 {
   "title": "First Blog",
@@ -32,3 +33,6 @@ Content-Type: application/json
   "username": "UTK",
   "password": "1234"
 }
+
+###
+GET http://localhost:3003/api/users
