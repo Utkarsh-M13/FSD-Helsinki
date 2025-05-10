@@ -1,0 +1,43 @@
+GET http://localhost:3003/api/blogs
+
+
+####
+POST http://localhost:3003/api/blogs HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlVUSyIsImlkIjoiNjgxMTQ5YjQyZmJmMjQ4ZjZlMjdkODRmIiwiaWF0IjoxNzQ1OTY1OTgzfQ.FzugtFhmZV7jo10hk1GZllBiOwzi38B1QKR2IO5yrWE
+
+{
+  "title": "Seconf Blog",
+  "author": "Utkarsh Best",
+  "url": "fhaofaohl.com",
+  "likes": 0
+}
+
+
+###
+POST http://localhost:3003/api/users HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "UTK",
+  "name": "Utkarsh",
+  "password": "1234"
+}
+
+
+###
+POST http://localhost:3003/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "UTK",
+  "password": "1234"
+}
+
+###
+GET http://localhost:3003/api/users
+
+####
+DELETE  http://localhost:3003/api/blogs/68115451ed56e5939285be13 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlVUSyIsImlkIjoiNjgxMTQ5YjQyZmJmMjQ4ZjZlMjdkODRmIiwiaWF0IjoxNzQ1OTY1OTgzfQ.FzugtFhmZV7jo10hk1GZllBiOwzi38B1QKR2IO5yrW
