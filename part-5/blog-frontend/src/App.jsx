@@ -2,18 +2,34 @@ import { useState, useEffect } from 'react'
 import blogService from './services/blogs'
 import Blogs from './components/Blogs'
 import Login from './components/login'
+import Notification from './components/Notification'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
+  const [notification, setNotification] = useState(null)
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
+    const userJSON = window.localStorage.getItem("loggedInUser");
+    if (userJSON) {
+      const loggedInUser = JSON.parse(userJSON)
+      setUser(loggedInUser)
+      blogService.setAuth(loggedInUser.token)
+    }
   }, [])
 
-  return user !== null ? <Blogs></Blogs> : <Login setUser={setUser}></Login>
+  const handleLogout = () => {
+    window.localStorage.removeItem("loggedInUser")
+    setUser(null)
+    blogService.setAuth(null)
+  }
+
+  return (
+    <>
+    {notification ? <Notification></Notification> : <></>}
+    {user !== null ? <Blogs></Blogs> : <Login setUser={setUser} setNotification={setNotification}></Login>}
+    {user !== null ? <button onClick={handleLogout}>logout</button> : null}
+    </>
+  )
 }
 
 export default App

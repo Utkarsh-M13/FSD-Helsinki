@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import login from '../services/login'
+import loginService from '../services/login'
+import blogService from '../services/blogs'
 
-const Login = ({setUser}) => {
+const Login = ({setUser, setNotification}) => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
@@ -15,7 +16,17 @@ const Login = ({setUser}) => {
 
   const loginHandler = async (event) => {
     event.preventDefault()
-    const user = await login(username, password);
+    try {
+      const user = await loginService.login(username, password);
+      blogService.setAuth(user.token)
+      window.localStorage.setItem("loggedInUser", JSON.stringify(user))
+      setUser(user)
+      setUsername("")
+      setPassword("")
+      setNotification("Logged in")
+    } catch (error) {
+      console.log('error:', error)
+    }
   }
 
 
