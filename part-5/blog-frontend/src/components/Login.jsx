@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import loginService from '../services/login'
 import blogService from '../services/blogs'
+import NotificationContext from '../contexts/NotificationContext'
 
-const Login = ({setUser, setNotification}) => {
+const Login = ({setUser}) => {
+  const setNotification = useContext(NotificationContext)
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
@@ -24,8 +26,14 @@ const Login = ({setUser, setNotification}) => {
       setUsername("")
       setPassword("")
       setNotification("Logged in")
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
     } catch (error) {
-      console.log('error:', error)
+      setNotification(error.message)
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
     }
   }
 

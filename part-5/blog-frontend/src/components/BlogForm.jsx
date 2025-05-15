@@ -1,16 +1,27 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import blogService from '../services/blogs'
+import NotificationContext from '../contexts/NotificationContext'
+
 
 const BlogForm = () => {
   const [title, setTitle] = useState("")
   const [url, setURL] = useState("")
   const [author, setAuthor] = useState("")
-  const handleCreate = async () => {
+  const setNotification = useContext(NotificationContext)
+  const handleCreate = async (event) => {
+    event.preventDefault()
     try {
       const response =  await blogService.createBlog(title, author, url)
-      console.log('response', response)
+      setNotification(`Created blog ${response.title} by ${response.author}`)
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
     } catch (error) {
       console.log('error', error)
+      setNotification(error.message)
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
     }
   }
   return (

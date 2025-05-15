@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, createContext } from 'react'
 import blogService from './services/blogs'
 import Blogs from './components/Blogs'
 import Login from './components/login'
 import Notification from './components/Notification'
+import NotificationContext from './contexts/NotificationContext'
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -25,9 +26,11 @@ const App = () => {
 
   return (
     <>
-    {notification ? <Notification></Notification> : <></>}
-    {user !== null ? <Blogs></Blogs> : <Login setUser={setUser} setNotification={setNotification}></Login>}
+    <NotificationContext.Provider value={setNotification}>{
+    notification ? <Notification message={notification}></Notification> : <></>}
+    {user !== null ? <Blogs></Blogs> : <Login setUser={setUser}></Login>}
     {user !== null ? <button onClick={handleLogout}>logout</button> : null}
+    </NotificationContext.Provider>
     </>
   )
 }
