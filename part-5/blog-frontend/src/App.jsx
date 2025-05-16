@@ -4,6 +4,7 @@ import Blogs from './components/Blogs'
 import Login from './components/login'
 import Notification from './components/Notification'
 import NotificationContext from './contexts/NotificationContext'
+import Toggleable from './components/Toggleable'
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -28,7 +29,7 @@ const App = () => {
     <>
     <NotificationContext.Provider value={setNotification}>{
     notification ? <Notification message={notification}></Notification> : <></>}
-    {user !== null ? <Blogs></Blogs> : <Login setUser={setUser}></Login>}
+    {user !== null ? <Blogs></Blogs> : <Toggleable toggleActionName={"Login"}><Login setUser={setUser}></Login></Toggleable>}
     {user !== null ? <button onClick={handleLogout}>logout</button> : null}
     </NotificationContext.Provider>
     </>

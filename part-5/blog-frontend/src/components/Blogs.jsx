@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Blog from './Blog'
 import blogService from '../services/blogs'
 import BlogForm from './BlogForm'
+import Toggleable from './Toggleable'
 
 
 const Blogs = () => {
@@ -20,7 +21,9 @@ const Blogs = () => {
         <Blog key={blog.id} blog={blog} />
       )}
     </div>
-    <BlogForm></BlogForm>
+    <Toggleable toggleActionName="New Blog">
+      <BlogForm></BlogForm>
+    </Toggleable>
     </>
    
   )
