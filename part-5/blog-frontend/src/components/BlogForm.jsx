@@ -4,9 +4,9 @@ import NotificationContext from '../contexts/NotificationContext'
 
 
 const BlogForm = () => {
-  const [title, setTitle] = useState("")
-  const [url, setURL] = useState("")
-  const [author, setAuthor] = useState("")
+  const [title, setTitle] = useState('')
+  const [url, setURL] = useState('')
+  const [author, setAuthor] = useState('')
   const setNotification = useContext(NotificationContext)
   const handleCreate = async (event) => {
     event.preventDefault()
@@ -25,13 +25,13 @@ const BlogForm = () => {
     }
   }
   return (
-    <form onSubmit={handleCreate}>
+    <form onSubmit={ handleCreate }>
       <div>Title</div>
-      <input type="text" value={title} onChange={(event) => setTitle(event.target.value)}/>
+      <input type='text' value={title} onChange={(event) => setTitle(event.target.value)}/>
       <div>Author</div>
-      <input type="text" value={author} onChange={(event) => {setAuthor(event.target.value)}}/>
+      <input type='text' value={author} onChange={(event) => {setAuthor(event.target.value)}}/>
       <div>url</div>
-      <input type="text" value={url} onChange={(event) => {setURL(event.target.value)}}/>
+      <input type='text' value={url} onChange={(event) => {setURL(event.target.value)}}/>
       <div><button type='submit'>Create Blog</button></div>
     </form>
   )
