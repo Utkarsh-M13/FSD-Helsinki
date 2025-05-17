@@ -12,13 +12,25 @@ const Blogs = () => {
       setBlogs( blogs )
     )  
   }, [])
+
+  const handleDelete = async (id) => {
+    try {
+      await blogService.deleteBlog(id)
+      setBlogs(oldBlogs => {
+        return oldBlogs.filter(b => b.id != id)
+      })
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+  
   
   return (
     <>
      <div>
       <h2>blogs</h2>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} handleDelete={handleDelete}/>
       )}
     </div>
     <Toggleable toggleActionName="New Blog">
